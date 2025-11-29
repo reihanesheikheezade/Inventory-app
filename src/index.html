@@ -4,9 +4,184 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/public/build/tailwind.css">
-  <title>Document</title>
+  <title>Inventory App</title>
 </head>
 <body>
-  <h1 class="bg-red-500 ">jjdjcnjdnc</h1>
+    <div class="min-h-screen bg-slate-800">
+      <!-- Appbar -->
+      <div class="h-12 flex justify-center items-center gap-x-4 bg-slate-700 text-slate-300 mb-6">
+        <h1 class="font-bold text-xl">InventoryApp</h1>
+        <span id="numOfProducts-navbar" class="w-7 h-7 rounded-full font-bold flex justify-center items-center bg-slate-500 border-2 border-slate-300">6</span>
+      </div>
+      <!-- App Content -->
+      <div class="container mx-auto max-w-screen-sm">
+        <!-- category form -->
+        <section>
+          <div class="mb-5 hidden" id="category-wrapper">
+            <h2 class="text-xl text-slate-300 font-bold mb-2">
+              Add New Category
+            </h2>
+            <form class="flex flex-col gap-y-4 bg-slate-700 rounded-xl p-4">
+              <div class="text-slate-400">
+                <label class="block mb-1" for="category-title"
+                  >Category Title</label
+                >
+                <input
+                  class="bg-transparent border border-slate-500 rounded-xl py-1 px-3"
+                  type="text"
+                  name="category-title"
+                  id="category-title"
+                  placeholder="title..."
+                />
+              </div>
+              <div class="text-slate-400">
+                <label class="block mb-1" for="category-desc"
+                  >Category description</label
+                >
+                <textarea
+                  class="w-full bg-transparent border border-slate-500 rounded-xl py-1 px-3"
+                  name="category-desc"
+                  id="category-desc"
+                ></textarea>
+              </div>
+              <div class="flex justify-center items-center gap-x-4">
+                <button
+                  id="cancle-add-category"
+                  class="flex-1 rounded-xl border border-slate-400 py-2 text-slate-400"
+                >
+                  Cancle
+                </button>
+                <button
+                  type="submit"
+                  id="add-new-category"
+                  class="flex-1 rounded-xl py-2 bg-slate-500 text-slate-200"
+                >
+                  Add New Category
+                </button>
+              </div>
+            </form>
+          </div>
+          <button
+            id="toggle-add-category"
+            class="text-slate-600 text-lg mb-4 font-medium"
+          >
+            Add New Category?
+          </button>
+        </section>
+        <!-- Product form -->
+        <div class="mb-5">
+          <h2 class="text-xl text-slate-300 font-bold mb-2">Add New Product</h2>
+          <form class="flex flex-col gap-y-4 bg-slate-700 rounded-xl p-4">
+            <div class="text-slate-400">
+              <label class="block mb-1" for="product-title"
+                >Product Title</label
+              >
+              <input
+                class="bg-transparent border border-slate-500 rounded-xl py-1 px-3"
+                type="text"
+                name="product-title"
+                id="product-title"
+                placeholder="title..."
+              />
+            </div>
+            <div class="text-slate-400">
+              <label class="block mb-1" for="product-quantity">Quantity</label>
+              <input
+                class="bg-transparent border border-slate-500 rounded-xl py-1 px-3"
+                type="number"
+                name="product-quantity"
+                id="product-quantity"
+                placeholder="quantity..."
+              />
+            </div>
+            <div class="text-slate-400">
+              <label class="block mb-1" for="product-category">Category</label>
+              <select
+                class="w-full bg-transparent border border-slate-500 rounded-xl"
+                name="product-category"
+                id="product-category"
+              >
+                <!-- <option class="bg-slate-500 text-slate-300" value="">
+                  select a category
+                </option>
+                <option class="bg-slate-500 text-slate-300" value="backend">
+                  backend
+                </option>
+                <option class="bg-slate-500 text-slate-300" value="frontend">
+                  frontend
+                </option> -->
+              </select>
+            </div>
+            <button
+              type="submit"
+              id="add-new-product"
+              class="w-full rounded-xl py-2 bg-slate-500 text-slate-200"
+            >
+              Add New Product
+            </button>
+          </form>
+        </div>
+        <!-- Products List -->
+        <h2 class="text-lg font-bold text-slate-300 mb-2">Product list</h2>
+        <div class="flex flex-col gap-y-4">
+          <div class="flex items-center">
+            <label for="search-input" class="flex-1 text-slate-500 text-lg"
+              >search</label
+            >
+            <input
+              id="search-input"
+              name="search-input"
+              type="text"
+              class="py-1.5 bg-transparent text-slate-400 border border-slate-500 rounded-xl"
+            />
+          </div>
+          <div class="flex items-center mb-2">
+            <label for="sort-input" class="flex-1 text-slate-500 text-lg"
+              >sort</label
+            >
+            <select
+              id="sort-input"
+              name="sort-input"
+              class="w-40 py-2 bg-transparent text-slate-400 rounded-xl"
+            >
+              <option
+                selected
+                class="bg-slate-500 text-slate-300"
+                value="newest"
+              >
+                newest
+              </option>
+              <option class="bg-slate-500 text-slate-300" value="oldest">
+                oldest
+              </option>
+            </select>
+          </div>
+          <div id="products-list">
+            <!-- products -->
+            <!-- <div class="flex items-center justify-between">
+                <span class="text-slate-400">folan</span>
+                <div class="flex items-center gap-x-3">
+                  <span class="text-slate-400">۱۴۰۳/۱۰/۱۶</span>
+                  <span
+                    class="border border-slate-400 rounded-2xl text-sm text-slate-400 px-3 py-0.5"
+                    >backend</span
+                  >
+                  <span
+                    class="border-2 border-slate-300 rounded-full w-7 h-7 flex items-center justify-center text-slate-300"
+                    >10</span
+                  >
+                  <button
+                    class="px-3 py-0.5 rounded-2xl border border-red-500 text-red-500 text-sm"
+                  >
+                    delete
+                  </button>
+                </div>
+              </div> -->
+          </div>
+        </div>
+
+        <div class="h-24"></div>
+      </div>
+    </div>
 </body>
 </html>
