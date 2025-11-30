@@ -17,24 +17,24 @@ class CategoryView {
     if (!title || !description) return;
     Storage.saveCategory({ title, description });
     this.categories = Storage.getAllCategories();
-    this.createCategoriesList();
+    this.createCategoriesList(this.categories);
     categoryTitle.value = "";
     categoryDescription.value = "";
   }
-  createCategoriesList() {
+  createCategoriesList(categories) {
     let result = `<option class="bg-slate-500 text-slate-300" value="">
                   select a category
                 </option>`;
 
-    this.categories.forEach(
+    categories.forEach(
       (category) =>
-        (result += `<option class="bg-slate-500 text-slate-300" value=${category.description}>
+        (result += `<option class="bg-slate-500 text-slate-300" value=${category.id}>
                   ${category.title}
                 </option>`)
     );
     productCategoriesDom.innerHTML = result;
   }
-  setApp() {
+  getCategories() {
     this.categories = Storage.getAllCategories();
   }
 }
