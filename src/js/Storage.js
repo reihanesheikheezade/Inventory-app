@@ -1,15 +1,20 @@
 export default class Storage {
   static getAllCategories() {
-    const savedCategories = JSON.parse(localStorage.getItem("categories")) || [];
+    const savedCategories =
+      JSON.parse(localStorage.getItem("categories")) || [];
     const sortedCategories = savedCategories.sort((a, b) => {
       return new Date(b.createdAt) - new Date(a.createdAt);
     });
     return sortedCategories;
   }
-  static getAllProducts() {
+  static getAllProducts(sort = "newest") {
     const savedProducts = JSON.parse(localStorage.getItem("products")) || [];
     return savedProducts.sort((a, b) => {
-      return new Date(b.createdAt) - new Date(a.createdAt);
+      if (sort === "newest") {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      } else if (sort === "oldest") {
+        return new Date(a.createdAt) - new Date(b.createdAt);
+      }
     });
   }
   static saveCategory(categoryToSave) {
@@ -19,7 +24,7 @@ export default class Storage {
     const existedCategory = savedCategories.find(
       (c) => c.id === categoryToSave.id
     );
-    if(existedCategory) {
+    if (existedCategory) {
       // edit
       existedCategory.title = categoryToSave.title;
       existedCategory.description = categoryToSave.description;
@@ -29,7 +34,7 @@ export default class Storage {
       categoryToSave.createdAt = new Date().toISOString();
     }
     savedCategories.push(categoryToSave);
-    localStorage.setItem("categories" ,JSON.stringify(savedCategories))
+    localStorage.setItem("categories", JSON.stringify(savedCategories));
   }
 
   static saveProduct(productToSave) {

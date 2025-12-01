@@ -77,18 +77,9 @@ class ProductView {
     this.createProductsList(filteredProducts);
   }
   sortProducts(e) {
-    const selectedSort = e.target.value;
-    let sortedProducts = [];
-    if (selectedSort === "newest") {
-      sortedProducts = this.products.sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-      );
-    } else {
-      sortedProducts = this.products.sort(
-        (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
-      );
-    }
-    this.createProductsList(sortedProducts);
+    const sort = e.target.value;
+    this.products = Storage.getAllProducts(sort)
+    this.createProductsList(this.products)
   }
  
 }
