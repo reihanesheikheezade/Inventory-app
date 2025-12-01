@@ -5,15 +5,14 @@ const productTitle = document.querySelector("#product-title");
 const productQuantity = document.querySelector("#product-quantity");
 const productCategory = document.querySelector("#product-category");
 const searchInput = document.querySelector("#search-input");
-const sortInput = document.querySelector("#sort-input");
-
+const sortInput = document.querySelector("#sort-input"); 
+const numOfProducts = document.querySelector("#numOfProducts-navbar")
 
 class ProductView {
   constructor() {
     addNewProductBtn.addEventListener("click", (e) => this.addNewProduct(e));
     searchInput.addEventListener("input", (e) => this.searchProducts(e));
     sortInput.addEventListener("change", (e) => this.sortProducts(e));
-    
 
     this.products = [];
   }
@@ -30,7 +29,6 @@ class ProductView {
     productTitle.value = "";
     productQuantity.value = "";
     productCategory.value = "";
-   
   }
 
   createProductsList(products) {
@@ -54,8 +52,8 @@ class ProductView {
                     >${item.quantity}</span
                   >
                   <button
-                    data-id=${item.id}
-                    class="px-3 py-0.5 rounded-2xl border border-red-500 text-red-500 text-sm"
+                    data-product-id=${item.id}
+                    class="delete-product px-3 py-0.5 rounded-2xl border border-red-500 text-red-500 text-sm"
                   >
                     delete
                   </button>
@@ -64,9 +62,16 @@ class ProductView {
     });
     const productsListDom = document.querySelector("#products-list");
     productsListDom.innerHTML = result;
+
+    const deleteBtns = [...document.querySelectorAll(".delete-product")];
+    deleteBtns.forEach((btn) =>
+      btn.addEventListener("click", (e) => this.deleteProduct(e))
+    );
+    this.numOfProducts(this.products)
   }
   getProducts() {
     this.products = Storage.getAllProducts();
+    
   }
   searchProducts(e) {
     const value = e.target.value.trim().toLowerCase();
@@ -78,9 +83,17 @@ class ProductView {
   }
   sortProducts(e) {
     const sort = e.target.value;
-    this.products = Storage.getAllProducts(sort)
-    this.createProductsList(this.products)
+    this.products = Storage.getAllProducts(sort);
+    this.createProductsList(this.products);
   }
- 
+  deleteProduct(e) {
+    const productId = e.target.dataset.productId;
+    Storage.deleteProduct(productId);
+    this.products = Storage.getAllProducts();
+    this.createProductsList(this.products);
+  }
+  numOfProducts(products) {
+    numOfProducts.innerHTML = products.length;
+  }
 }
 export default new ProductView();
