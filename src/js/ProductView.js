@@ -7,11 +7,14 @@ const productCategory = document.querySelector("#product-category");
 const searchInput = document.querySelector("#search-input");
 const sortInput = document.querySelector("#sort-input");
 
+
 class ProductView {
   constructor() {
     addNewProductBtn.addEventListener("click", (e) => this.addNewProduct(e));
     searchInput.addEventListener("input", (e) => this.searchProducts(e));
     sortInput.addEventListener("change", (e) => this.sortProducts(e));
+    
+
     this.products = [];
   }
 
@@ -27,6 +30,7 @@ class ProductView {
     productTitle.value = "";
     productQuantity.value = "";
     productCategory.value = "";
+   
   }
 
   createProductsList(products) {
@@ -86,6 +90,6 @@ class ProductView {
     }
     this.createProductsList(sortedProducts);
   }
+ 
 }
-
 export default new ProductView();
